@@ -296,7 +296,7 @@ namespace WebAdmin.Controllers
             objResult = JsonConvert.SerializeObject(modeloRpta);
 
             return Json(objResult);
-        }
+        } 
 
         [HttpPost]
         public object mGuardarCompraVenta(
