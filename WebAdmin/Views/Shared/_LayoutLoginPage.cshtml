@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>@ViewBag.Title</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/lib/bower_components/font-awesome/css/font-awesome.min.css">
+
+        <!--===============================================================================================-->
+        <link rel="icon" type="image/png" href="~/lib/Login_design/images/icons/favicon.ico" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/iconic/css/material-design-iconic-font.min.css">
+
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/css/main.css">
+
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+
+
+    </environment>
+
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/lib/bower_components/font-awesome/css/font-awesome.min.css">
+
+        <!--===============================================================================================-->
+        <link rel="icon" type="image/png" href="~/lib/Login_design/images/icons/favicon.ico" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/fonts/iconic/css/material-design-iconic-font.min.css">
+
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/lib/Login_design/css/main.css">
+
+
+        <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+
+    </environment>
+    
+</head>
+
+
+<body>
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+
+    <environment include="Development">
+        <script src="~/lib/Login_design/js/jquery-3.2.1.min.js"></script>
+        <script src="~/lib/Login_design/js/main.js"></script>
+
+        <script src="~/lib/sweetalert/sweetalert2.min.js"></script>
+
+
+
+        <script src="~/lib/Scripts/Alert.js"></script>
+
+        <script src="~/js/JSLogin.js?v=10"></script>
+
+
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/lib/Login_design/js/jquery-3.2.1.min.js"></script>
+        <script src="~/lib/Login_design/js/main.js"></script>
+
+        <script src="~/lib/sweetalert/sweetalert2.min.js"></script>
+
+
+
+        <script src="~/lib/Scripts/Alert.js"></script>
+
+        <script src="~/js/JSLogin.js?v=12"></script>
+
+
+    </environment>
+        
+
+</body>
+</html>

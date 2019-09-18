@@ -1,0 +1,473 @@
+﻿
+@{
+    ViewData["Title"] = "CompraVenta";
+
+    string sUrl_WebAdmin = ViewBag.sUrlWebApi;
+}
+
+<script>var Url_WebAdmin="@sUrl_WebAdmin";</script>
+
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>*@
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+<style>
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .table {
+            cursor: pointer;
+        }
+        /*
+    .tr {
+    width: 100%;
+    display: inline-table;
+    height:20px;                // <-- the rows height
+    }*/
+
+        .table-condensed {
+            font-size: 11px;
+        }
+
+        label, p {
+            font-size: 11px;
+        }
+
+        .table.dataTable tbody tr.selected {
+            color: red !important;
+            background-color: #FFFFBA !important;
+        }
+</style>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <label>Criterio de busqueda:</label>
+                                <select id="cmbCriterio" class="form-control">
+                                    <option>a</option>
+                                    <option>b</option>
+                                </select>
+                            </div>
+                            <div class="form-group ">
+                                <label>Valor a buscar:</label>
+                                <div class="input-group">
+                                    <input type="text" id="txtSearch" class="form-control input-sm" placeholder="Enter text...">
+                                    <span class="input-group-btn">
+                                        <button id="btnSearch" class="btn btn-default  input-sm" type="button"><span class="fa fa-search"></span></button>
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <br />
+
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                        <label class="col-sm-3 " style="text-align:left">Nombre / Razón Social:</label>
+                                        <p id="lblNombreRazonSocial" class="col-sm-9 " style="text-align:left"></p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                        <label class="col-sm-3 " style="text-align:left">D.N.I:</label>
+                                        <p id="lblDNI" class="col-sm-9 "></p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                        <label class="col-sm-3 ">Dirección:</label>
+                                        <p id="lblDIreccion" class="col-sm-9 "></p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                        <label class="col-sm-3 ">Teléfonos:</label>
+                                        <p id="lblTelefonos" class="col-sm-9 "></p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group ">
+                                        <label class="col-sm-3 col-form-label">Email:</label>
+                                        <p id="lblEmail" class="col-sm-9 "></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @*<div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <b class="col-sm-3 " style="text-align:left">NOMBRE / RAZÓN SOCIAL:</b>
+                                    <p id="lblNombreRazonSocial" class="col-sm-9 " style="text-align:left"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <b class="col-sm-3 " style="text-align:left">D.N.I</b>
+                                    <p id="lblDNI" class="col-sm-9 " style="text-align:left"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <b class="col-sm-3 ">DIRECCIÓN</b>
+                                    <p id="lblDIreccion" class="col-sm-9 "></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <b class="col-sm-3 ">TELEFONOS</b>
+                                    <p id="lblTelefonos" class="col-sm-9 "></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group ">
+                                    <b class="col-sm-3 col-form-label">E-MAIL</b>
+                                    <p id="lblEmail" class="col-sm-9 col-form-label"></p>
+                                </div>
+                            </div>
+
+
+                        </div>*@
+
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Custom Tabs -->
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" style="background-color:#F8F8F8"><a href="#tab_1" data-toggle="tab">DETALLE DE CUENTA VALOR</a></li>
+                                    <li style="background-color:#F8F8F8"><a href="#tab_2" data-toggle="tab">DETALLE DE SALDOS</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table id="tbCab_CuentaValor" class="table table-sm table-striped  table-hover table-condensed">
+                                                        <thead>
+                                                            <tr class="bg-primary">
+                                                                <th>Cuenta Valor</th>
+                                                                <th>RUT</th>
+                                                                <th>Cuenta Economica Cargo</th>
+                                                                <th>Cuenta Economica Abono</th>
+                                                                <th>Comision Rueda</th>
+                                                                <th>Mancomunado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbDet_CuentaValor"></tbody>
+                                                        @*<tfoot>
+                                                                <tr class="bg-primary">
+                                                                    <th>Cuenta Valor</th>
+                                                                    <th>RUT</th>
+                                                                    <th>Cuenta Economica Cargo</th>
+                                                                    <th>Cuenta Economica Abono</th>
+                                                                    <th>Comision Rueda</th>
+                                                                    <th>Mancomunado</th>
+                                                                </tr>
+                                                            </tfoot>*@
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="tab_2">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table id="tbCab_CargarValores" class="table table-sm  table-striped table-hover table-condensed">
+                                                        <thead>
+                                                            <tr class="bg-primary">
+                                                                <th>Cuenta Valor</th>
+                                                                <th>Saldo Contable</th>
+                                                                <th>Saldo DIsponible</th>
+                                                                <th>Nombre Valor</th>
+                                                                <th>Moneda</th>
+                                                                <th>Precio Prom.</th>
+                                                                <th>Precio Act.</th>
+                                                                <th>Valor Actual</th>
+                                                                <th>Utilidad / Perdida</th>
+                                                                <th>Custodio de Titulos</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbDet_CargarValores"></tbody>
+                                                        <tfoot>
+                                                            <tr class="bg-primary">
+                                                                <th colspan="6"></th>
+                                                                @*<th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>*@
+                                                                <th><label id="tbDet_CargarValores_PrecioAct"></label> Precio Act.</th>
+                                                                <th><label id="tbDet_CargarValores_ValorActual"></label> Valor Actual</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- nav-tabs-custom -->
+                            </div>
+                            <!-- /.col -->
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <label class="col-xs-4">Custodio Titulo:</label>
+                                <input type="text" id="txtCustodioTitulo" class="form-control input-sm " style="width:150px" placeholder="Ingresar texto...">
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Tipo Negociacion:</label>
+                                <select id="cmbTipoNegociacion" class="form-control input-sm " style="width:150px">
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Tipo Orden:</label>
+                                <select id="cmbTipoOrden" class="form-control input-sm " style="width:150px">
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Dias Vigencia:</label>
+                                <input type="number" id="txtDiasVigencia" class="form-control input-sm " style="width:150px" value="1" placeholder="Ingresar texto...">
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-4">
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Nemonico:</label>
+                                <input type="text" id="txtNemonico" class="form-control input-sm " style="width:150px" placeholder="Ingresar texto...">
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Orden:</label>
+                                <select id="cmbOrden" class="form-control" style="width:150px">
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Tipo Comision:</label>
+                                <select id="cmbTipoComision" class="form-control input-sm" style="width:150px">
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Seleccione:</label>
+                                <div style="width:150px;">
+                                    <div class="[ form-group ] ">
+                                        <input type="checkbox" name="chkRetencion" id="chkRetencion" autocomplete="off" />
+                                        <div class="[ btn-group ]">
+                                            <label for="chkRetencion" class="[ btn btn-primary btn-sm ]">
+                                                <span class="[ glyphicon glyphicon-ok ]"></span>
+                                                <span> </span>
+                                            </label>
+                                            <label for="chkRetencion" class="[ btn btn-default btn-sm active ]">
+                                                Retención
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <label class="col-xs-4">ISN:</label>
+                                <input type="text" id="txtISN" class="form-control input-sm" style="width:150px" placeholder="Ingresar texto...">
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-xs-4">Comisión:</label>
+                                <input type="number" id="txtComision" class="form-control input-sm" style="width:150px" placeholder="Ingresar texto...">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" id="divDatoNegociacion" style="display:none">
+
+                        <h4 class="col-sm-12">DATOS DE NEGOCIACIÓN:</h4>
+
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Nro Titulos:</label>
+                                <input type="number" id="txtNumeroTitulo" class="form-control input-sm " placeholder="Ingresar texto..." />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Tipo Precio:</label>
+                                <select id="cmbTipoPrecio" class="form-control input-sm ">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Valor Precio:</label>
+                                <input type="number" id="txtValorPrecio" class="form-control input-sm " placeholder="Ingresar texto..." />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Monto Operación:</label>
+                                <input type="number" id="txtMontoOperacion" disabled="disabled" class="form-control input-sm " />
+                            </div>
+                            <div class="form-group ">
+                                <label class="">Monto Liquidación:</label>
+                                <input type="number" id="txtMontoLiquidacion" disabled="disabled" class="form-control input-sm " />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <div class="radio">
+                                    <label><input type="radio" name="optradio">Telefono</label>
+                                    <label><input type="radio" name="optradio">Escrita</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Represent. que Recibió:</label>
+                                <input type="text" id="txtRepresentante" class="form-control input-sm " placeholder="Ingresar texto..." />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group ">
+                                <label class="">Tipo Orden:</label>
+                                <input type="text" id="txtTipoOrden" class="form-control input-sm " disabled="disabled" placeholder="Ingresar texto..." />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <h4 class="col-sm-12">CUENTA ABONO/CARGO:</h4>
+                        <div class="col-sm-4">
+                            <div class="form-group ">
+                                <label class="">Cuenta Abono Cargo:</label>
+                                <select id="cmbCuentaAbonoCargo" class="form-control input-sm ">
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="">Otra:</label>
+                                <select id="cmbOtra" class="form-control input-sm ">
+                                    <option value="0">-Seleccione-</option>
+                                    <option Value="S">Cuenta SAB</option>
+                                    <option Value="C">Cheque</option>
+                                    <option Value="P">Transaferencia Pais</option>
+                                    <option Value="E">Transferencia Exterior</option>
+                                    <option Value="I">Transferencia Interbancaria</option>
+                                    <option Value="R">Cuenta Control</option>
+                                    <option Value="B">Otra Cuenta Bancaria</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="">Cuenta :</label>
+                                <input type="text" id="txtCuenta" class="form-control input-sm " placeholder="Ingresar texto..." />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="form-group ">
+                                <label>Observaciones:</label>
+                                <textarea id="txtObservaciones" class="form-control input-sm " style="height:30vh !important; width:100%;" placeholder="Ingresar texto..."></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <input type="button" id="btnGuardar" class="btn btn-info" value="Guardar" />
+                    <input type="button" id="btnEvento" class="btn btn-danger" value="Cancelar" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="~/js/Ordenes/JSCompraVenta.js?v=4"></script>
+
