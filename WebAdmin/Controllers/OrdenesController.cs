@@ -265,7 +265,7 @@ namespace WebAdmin.Controllers
             objResult = JsonConvert.SerializeObject(modeloRpta);
 
             return Json(objResult);
-        }
+        }  
 
 
 
