@@ -78,7 +78,7 @@ namespace Logic
         public async Task<Model> mGetTipoOrden(ConfigWeb ConfigWeb_, IConnectHttpClient IConnectHttpClient_, int iCodigoOpcion)
         {
             Model modeloRpta = new Model();
-
+                
             try
             {
                 string sUrlWebApi = ConfigWeb_.Url_WebApi;
